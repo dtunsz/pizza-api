@@ -45,7 +45,9 @@ class OrderController extends Controller
 
 
     public function confirmed ($orderId){
-        $order = Customer::where('orderId', '=' ,$orderId)->first();
+        //$order = Customer::where('orderId', '=' ,$orderId)->first();
+        $order = Customer::where('orderId', '=', $order)->with('orders')->get();
+
         if ($order) {
             if ($order->confirmed === 1) {
                 return response()->json([
@@ -115,7 +117,7 @@ class OrderController extends Controller
             $item->quantity = $order['units'];
             $item->save();
         }
-        Mail::to($request['email'])->send(new OrderConfirm($generatedOrderId));
+        // Mail::to($request['email'])->send(new OrderConfirm($generatedOrderId));
 
         $all = Customer::where('orderId', '=', $generatedOrderId)->with('orders')->get();
         if($all) {
