@@ -143,7 +143,7 @@ class OrderController extends Controller
         $all = Customer::where('orderId', '=', $order)->with('orders')->get();
         return response()->json([
             'message' => "Order Fetched",
-            'order' => $order
+            'order' => $all
         ], 200);
     }
 
