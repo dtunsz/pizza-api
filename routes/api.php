@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('orders/deliver/{orderId}', 'api\OrderController@delivered')->name('orders.delivered');
-Route::post('orders/confirm/{orderId}', 'api\OrderController@confirmed')->name('orders.confirmed');
-Route::apiResource('orders', 'api\OrderController');
-Route::apiResource('products', 'api\ProductController');
+Route::post('orders/deliver/{orderId}', 'API\OrderController@delivered')->name('orders.delivered');
+Route::post('orders/confirm/{orderId}', 'API\OrderController@confirmed')->name('orders.confirmed');
+Route::apiResource('orders', 'API\OrderController');
+Route::apiResource('products', 'API\ProductController');
 
