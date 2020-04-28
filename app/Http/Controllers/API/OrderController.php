@@ -43,20 +43,21 @@ class OrderController extends Controller
 
     }
 
-
+    /**Confirms an order so it can be delivered */
     public function confirmed ($orderId){
-        //$order = Customer::where('orderId', '=' ,$orderId)->first();
-        $order = Customer::where('orderId', '=', $order)->with('orders')->get();
+        $customer = Customer::where('orderId', '=' ,$orderId)->first();
 
-        if ($order) {
-            if ($order->confirmed === 1) {
+        if ($customer) {
+            if ($customer->confirmed === 1) {
+                $order = Customer::where('orderId', '=', $orderId)->with('orders')->get();
                 return response()->json([
                     'message' => 'Order is already confirmed',
                     'order' => $order
                 ], 200);
             } else {
-                $order->confirmed = 1;
-                $order->save();
+                $customer->confirmed = 1;
+                $customer->save();
+                $order = Customer::where('orderId', '=', $orderId)->with('orders')->get();
                 return response()->json([
                     'message' => 'Order Confirmed',
                     'order' => $order
